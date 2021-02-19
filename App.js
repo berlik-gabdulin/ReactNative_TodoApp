@@ -6,8 +6,17 @@ import { MainScreen } from "./src/screens/MainScreen";
 import { TodoScreen } from "./src/screens/TodoScreen";
 
 export default function App() {
-	const [todoId, setTodoId] = useState(null);
-	const [todos, setTodos] = useState([]);
+	const [todoId, setTodoId] = useState("1");
+	const [todos, setTodos] = useState([
+		{
+			id: "1",
+			title: "Выучить Реакт Натив",
+		},
+		{
+			id: "2",
+			title: "написать приложение",
+		},
+	]);
 
 	const addTodo = (title) => {
 		// const newTodo = {
@@ -41,18 +50,19 @@ export default function App() {
 			todos={todos}
 			addTodo={addTodo}
 			removeTodo={removeTodo}
-			openTodo={(id) => {
-				setTodoId(id);
-			}}
+			openTodo={setTodoId}
 		/>
 	);
 
 	if (todoId) {
+		const selectedTodo = todos.find((todo) => todo.id === todoId);
 		content = (
 			<TodoScreen
 				goBack={() => {
 					setTodoId(null);
 				}}
+				todo={selectedTodo}
+				removeTodo={removeTodo}
 			/>
 		);
 	}
